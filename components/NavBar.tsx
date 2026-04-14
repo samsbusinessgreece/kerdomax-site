@@ -88,39 +88,43 @@ export default function NavBar() {
 
       {/* Right side: language toggle + CTA */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        {/* Language flag toggle */}
-        <div style={{ display: 'flex', gap: '4px' }}>
+        {/* Language toggle */}
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
           <button
             onClick={() => setLang('en')}
-            title="English"
             style={{
-              background: lang === 'en' ? 'rgba(46,211,198,0.15)' : 'transparent',
-              border: lang === 'en' ? '1px solid rgba(46,211,198,0.5)' : '1px solid transparent',
-              borderRadius: '6px',
-              padding: '4px 7px',
+              background: lang === 'en' ? 'var(--teal)' : 'transparent',
+              border: '1px solid var(--teal)',
+              borderRadius: '4px',
+              padding: '4px 10px',
               cursor: 'pointer',
-              fontSize: '1.1rem',
-              lineHeight: 1,
-              transition: 'background 0.2s, border 0.2s',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              color: lang === 'en' ? 'var(--navy)' : 'var(--teal)',
+              fontFamily: 'Montserrat, sans-serif',
+              transition: 'background 0.2s, color 0.2s',
             }}
           >
-            🇬🇧
+            EN
           </button>
           <button
             onClick={() => setLang('el')}
-            title="Ελληνικά"
             style={{
-              background: lang === 'el' ? 'rgba(46,211,198,0.15)' : 'transparent',
-              border: lang === 'el' ? '1px solid rgba(46,211,198,0.5)' : '1px solid transparent',
-              borderRadius: '6px',
-              padding: '4px 7px',
+              background: lang === 'el' ? 'var(--teal)' : 'transparent',
+              border: '1px solid var(--teal)',
+              borderRadius: '4px',
+              padding: '4px 10px',
               cursor: 'pointer',
-              fontSize: '1.1rem',
-              lineHeight: 1,
-              transition: 'background 0.2s, border 0.2s',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              color: lang === 'el' ? 'var(--navy)' : 'var(--teal)',
+              fontFamily: 'Montserrat, sans-serif',
+              transition: 'background 0.2s, color 0.2s',
             }}
           >
-            🇬🇷
+            GR
           </button>
         </div>
 
