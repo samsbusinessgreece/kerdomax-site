@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import LogoIcon from './LogoIcon'
+import { useLanguage } from './LanguageProvider'
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false)
+  const { lang, setLang, t } = useLanguage()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30)
@@ -15,6 +17,13 @@ export default function NavBar() {
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const navLinks = [
+    { label: t.nav.features, id: 'features' },
+    { label: t.nav.howItWorks, id: 'how-it-works' },
+    { label: t.nav.pricing, id: 'pricing' },
+    { label: t.nav.results, id: 'trust' },
+  ]
 
   return (
     <nav
@@ -58,12 +67,7 @@ export default function NavBar() {
         }}
         className="nav-links-desktop"
       >
-        {[
-          { label: 'Features', id: 'features' },
-          { label: 'How It Works', id: 'how-it-works' },
-          { label: 'Pricing', id: 'pricing' },
-          { label: 'Results', id: 'trust' },
-        ].map(({ label, id }) => (
+        {navLinks.map(({ label, id }) => (
           <li key={id}>
             <button
               onClick={() => scrollTo(id)}
@@ -82,26 +86,65 @@ export default function NavBar() {
         ))}
       </ul>
 
-      {/* CTA */}
-      <a
-        href="#beta"
-        onClick={e => { e.preventDefault(); scrollTo('beta') }}
-        style={{
-          background: 'var(--teal)', color: 'var(--navy)',
-          fontFamily: 'Montserrat, sans-serif',
-          fontWeight: 700, fontSize: '0.8rem',
-          letterSpacing: '0.06em', textTransform: 'uppercase',
-          padding: '10px 22px',
-          border: 'none', borderRadius: '6px',
-          cursor: 'pointer', textDecoration: 'none',
-          display: 'inline-block',
-          transition: 'background 0.2s',
-        }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'var(--teal2)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'var(--teal)')}
-      >
-        Get Early Access
-      </a>
+      {/* Right side: language toggle + CTA */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Language flag toggle */}
+        <div style={{ display: 'flex', gap: '4px' }}>
+          <button
+            onClick={() => setLang('en')}
+            title="English"
+            style={{
+              background: lang === 'en' ? 'rgba(46,211,198,0.15)' : 'transparent',
+              border: lang === 'en' ? '1px solid rgba(46,211,198,0.5)' : '1px solid transparent',
+              borderRadius: '6px',
+              padding: '4px 7px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              lineHeight: 1,
+              transition: 'background 0.2s, border 0.2s',
+            }}
+          >
+            🇬🇧
+          </button>
+          <button
+            onClick={() => setLang('el')}
+            title="Ελληνικά"
+            style={{
+              background: lang === 'el' ? 'rgba(46,211,198,0.15)' : 'transparent',
+              border: lang === 'el' ? '1px solid rgba(46,211,198,0.5)' : '1px solid transparent',
+              borderRadius: '6px',
+              padding: '4px 7px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              lineHeight: 1,
+              transition: 'background 0.2s, border 0.2s',
+            }}
+          >
+            🇬🇷
+          </button>
+        </div>
+
+        {/* CTA */}
+        <a
+          href="#beta"
+          onClick={e => { e.preventDefault(); scrollTo('beta') }}
+          style={{
+            background: 'var(--teal)', color: 'var(--navy)',
+            fontFamily: 'Montserrat, sans-serif',
+            fontWeight: 700, fontSize: '0.8rem',
+            letterSpacing: '0.06em', textTransform: 'uppercase',
+            padding: '10px 22px',
+            border: 'none', borderRadius: '6px',
+            cursor: 'pointer', textDecoration: 'none',
+            display: 'inline-block',
+            transition: 'background 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'var(--teal2)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'var(--teal)')}
+        >
+          {t.nav.cta}
+        </a>
+      </div>
 
       <style>{`
         @media (max-width: 768px) {

@@ -1,29 +1,11 @@
-const metrics = [
-  { num: '+28%', label: 'Avg. revenue uplift' },
-  { num: '3×',   label: 'Faster listing setup' },
-  { num: '94%',  label: 'Queries auto-handled' },
-  { num: '€5B+', label: 'Market we\'re built for' },
-]
+'use client'
 
-const testimonials = [
-  {
-    quote: 'Managing pricing manually during peak season on Mykonos was a nightmare. The kind of local signal an AI like this could act on in minutes would have taken me hours every week.',
-    name: 'Nikos P.',
-    meta: '4 villas, Mykonos',
-  },
-  {
-    quote: "The challenge isn't just pricing — it's the guest messages, the listings, the regulations. I need one tool that handles all of it, not three separate subscriptions.",
-    name: 'Maria S.',
-    meta: '8 apartments, Athens',
-  },
-  {
-    quote: "PriceLabs is powerful but it doesn't know that Easter week in Rhodes is completely different from the same week in Thessaloniki. Local context is everything.",
-    name: 'Yannis D.',
-    meta: '12 units, Rhodes & Crete',
-  },
-]
+import { useLanguage } from './LanguageProvider'
 
 export default function Trust() {
+  const { t } = useLanguage()
+  const tr = t.trust
+
   return (
     <section
       id="trust"
@@ -44,17 +26,17 @@ export default function Trust() {
         {/* Left: metrics */}
         <div className="reveal">
           <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.75rem' }}>
-            Why KERDOMAX
+            {tr.tag}
           </div>
           <h2 style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.015em', color: 'var(--light)', marginBottom: '1rem' }}>
-            Numbers that matter<br />to Greek hosts
+            {tr.heading1}<br />{tr.heading2}
           </h2>
           <p style={{ fontSize: '1.05rem', fontWeight: 300, color: 'var(--muted)', lineHeight: 1.7, marginBottom: '2rem' }}>
-            Built after talking to dozens of hosts across Athens, Crete, and the Aegean islands. These are the results they told us they need.
+            {tr.subhead}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-            {metrics.map(({ num, label }) => (
+            {tr.metrics.map(({ num, label }) => (
               <div
                 key={label}
                 style={{
@@ -77,7 +59,7 @@ export default function Trust() {
 
         {/* Right: testimonials */}
         <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          {testimonials.map(({ quote, name, meta }) => (
+          {tr.testimonials.map(({ quote, name, meta }) => (
             <div
               key={name}
               style={{

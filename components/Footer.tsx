@@ -1,6 +1,11 @@
 'use client'
 
+import { useLanguage } from './LanguageProvider'
+
 export default function Footer() {
+  const { t } = useLanguage()
+  const f = t.footer
+
   return (
     <footer
       style={{
@@ -26,15 +31,15 @@ export default function Footer() {
           <span style={{ color: 'var(--teal)' }}>MAX</span>
         </div>
         <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: '4px' }}>
-          AI Revenue Optimization for Greek Short-Term Rental Hosts
+          {f.tagline}
         </div>
       </div>
 
       <div style={{ display: 'flex', gap: '1.5rem' }}>
-        {['Privacy Policy', 'Terms', 'Contact'].map(link => (
+        {f.links.map((link, i) => (
           <a
             key={link}
-            href={link === 'Contact' ? 'mailto:hello@kerdomax.io' : '#'}
+            href={i === 2 ? 'mailto:hello@kerdomax.io' : '#'}
             style={{
               fontSize: '0.8rem', color: 'var(--muted)',
               textDecoration: 'none', transition: 'color 0.2s',
@@ -48,7 +53,7 @@ export default function Footer() {
       </div>
 
       <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>
-        © 2026 KERDOMAX. All rights reserved.
+        {f.copyright}
       </div>
     </footer>
   )

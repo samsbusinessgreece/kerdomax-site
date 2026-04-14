@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLanguage } from './LanguageProvider'
 
 const shieldIcon = (
   <svg viewBox="0 0 24 24" fill="none" stroke="var(--teal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 14, height: 14 }}>
@@ -19,8 +20,13 @@ const userIcon = (
   </svg>
 )
 
+const bulletIcons = [shieldIcon, checkIcon, userIcon]
+
 export default function BetaForm() {
   const [submitted, setSubmitted] = useState(false)
+  const { t } = useLanguage()
+  const b = t.beta
+  const f = b.form
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -58,23 +64,19 @@ export default function BetaForm() {
         {/* Copy */}
         <div className="reveal">
           <div style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.75rem' }}>
-            Limited Beta
+            {b.tag}
           </div>
           <h2 style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.015em', color: 'var(--light)', marginBottom: '1rem' }}>
-            Be first.<br />Get results.
+            {b.heading1}<br />{b.heading2}
           </h2>
           <p style={{ fontSize: '1.05rem', fontWeight: 300, color: 'var(--muted)', lineHeight: 1.7, marginBottom: '2rem', maxWidth: '440px' }}>
-            We&apos;re onboarding a limited number of Greek hosts for our beta program. Free access while we validate — your feedback shapes the product.
+            {b.subhead}
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            {[
-              { icon: shieldIcon, text: 'No credit card required' },
-              { icon: checkIcon, text: 'Free during beta' },
-              { icon: userIcon, text: 'Limited spots available' },
-            ].map(({ icon, text }) => (
+            {b.bullets.map((text, i) => (
               <div key={text} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', fontWeight: 500, color: 'var(--muted)' }}>
-                {icon}
+                {bulletIcons[i]}
                 {text}
               </div>
             ))}
@@ -95,10 +97,10 @@ export default function BetaForm() {
             <div style={{ textAlign: 'center', padding: '2rem 0' }}>
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎉</div>
               <h3 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '1.4rem', color: 'var(--beige)', marginBottom: '0.75rem' }}>
-                You&apos;re on the list!
+                {b.success.heading}
               </h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: 1.65 }}>
-                We&apos;ll be in touch with your beta invite shortly. Keep an eye on your inbox.
+                {b.success.body}
               </p>
             </div>
           ) : (
@@ -106,13 +108,13 @@ export default function BetaForm() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
-                    First Name
+                    {f.firstName}
                   </label>
                   <input className="form-input" type="text" placeholder="Nikos" required />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
-                    Last Name
+                    {f.lastName}
                   </label>
                   <input className="form-input" type="text" placeholder="Papadopoulos" required />
                 </div>
@@ -120,7 +122,7 @@ export default function BetaForm() {
 
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
-                  Email Address
+                  {f.email}
                 </label>
                 <input className="form-input" type="email" placeholder="you@example.com" required />
               </div>
@@ -128,33 +130,31 @@ export default function BetaForm() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
-                    City / Region
+                    {f.city}
                   </label>
-                  <input className="form-input" type="text" placeholder="Athens, Crete…" />
+                  <input className="form-input" type="text" placeholder={f.cityPlaceholder} />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
-                    Properties
+                    {f.properties}
                   </label>
                   <select className="form-input">
-                    <option value="">Select…</option>
-                    <option>1 property</option>
-                    <option>2 properties</option>
-                    <option>3–5 properties</option>
-                    <option>6–10 properties</option>
-                    <option>10+ properties</option>
+                    <option value="">{f.selectPlaceholder}</option>
+                    {f.propertyOptions.map(opt => (
+                      <option key={opt}>{opt}</option>
+                    ))}
                   </select>
                 </div>
               </div>
 
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
-                  Biggest Challenge? <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(optional)</span>
+                  {f.challenge} <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>{f.optional}</span>
                 </label>
                 <textarea
                   className="form-input"
                   rows={3}
-                  placeholder="Pricing during shoulder season, guest messaging, regulations…"
+                  placeholder={f.challengePlaceholder}
                   style={{ resize: 'vertical' }}
                 />
               </div>
@@ -174,11 +174,11 @@ export default function BetaForm() {
                 onMouseEnter={e => { const el = e.currentTarget; el.style.background = 'var(--teal2)'; el.style.transform = 'translateY(-1px)' }}
                 onMouseLeave={e => { const el = e.currentTarget; el.style.background = 'var(--teal)'; el.style.transform = 'none' }}
               >
-                Request Beta Access →
+                {f.submit}
               </button>
 
               <p style={{ fontSize: '0.72rem', color: 'var(--muted)', textAlign: 'center', marginTop: '0.75rem', lineHeight: 1.5 }}>
-                By signing up you agree to receive product updates and your beta invite. No spam, ever. Unsubscribe anytime.
+                {f.privacy}
               </p>
             </form>
           )}

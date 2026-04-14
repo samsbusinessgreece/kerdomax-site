@@ -1,6 +1,11 @@
 'use client'
 
+import { useLanguage } from './LanguageProvider'
+
 export default function Hero() {
+  const { t } = useLanguage()
+  const h = t.hero
+
   return (
     <section
       id="hero"
@@ -53,7 +58,7 @@ export default function Hero() {
           }}
         >
           <span className="pulse-dot" />
-          Now accepting beta hosts — Greece only
+          {h.badge}
         </div>
 
         {/* Headline */}
@@ -68,9 +73,9 @@ export default function Hero() {
             marginBottom: '1.5rem',
           }}
         >
-          Your Greek rental.<br />
-          <span style={{ color: 'var(--teal)' }}>AI-optimized.</span><br />
-          <span style={{ color: 'var(--beige)' }}>Effortlessly.</span>
+          {h.headline1}<br />
+          <span style={{ color: 'var(--teal)' }}>{h.headline2}</span><br />
+          <span style={{ color: 'var(--beige)' }}>{h.headline3}</span>
         </h1>
 
         {/* Subhead */}
@@ -84,9 +89,7 @@ export default function Hero() {
             lineHeight: 1.7,
           }}
         >
-          Dynamic pricing, listing optimization, and intelligent guest
-          communication — built exclusively for the Greek short-term rental
-          market. Stop leaving revenue on the table.
+          {h.subhead}
         </p>
 
         {/* CTAs */}
@@ -105,7 +108,7 @@ export default function Hero() {
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--teal2)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--teal)'; (e.currentTarget as HTMLElement).style.transform = 'none' }}
           >
-            Join the Beta — Free
+            {h.cta1}
           </a>
           <a
             href="#features"
@@ -122,7 +125,7 @@ export default function Hero() {
             onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(46,211,198,0.08)')}
             onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'transparent')}
           >
-            See How It Works
+            {h.cta2}
           </a>
         </div>
 
@@ -132,12 +135,7 @@ export default function Hero() {
             display: 'flex', gap: '3rem', marginTop: '4rem', flexWrap: 'wrap',
           }}
         >
-          {[
-            { num: '+28%', label: 'Avg. Revenue Uplift' },
-            { num: '200K+', label: 'Greek STR Listings' },
-            { num: '€7B', label: 'Annual Booking Volume' },
-            { num: '3 min', label: 'Setup Time' },
-          ].map(({ num, label }) => (
+          {h.stats.map(({ num, label }) => (
             <div key={label}>
               <div
                 style={{

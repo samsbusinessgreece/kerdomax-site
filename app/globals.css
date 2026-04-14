@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
 
+=======
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;1,700&display=swap');
+>>>>>>> 9ad67b4b3a2a2ff6772789de0ba0edacd6f4ebdc
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+<<<<<<< HEAD
   --navy:    #0F1A2E;
   --slate:   #1A2E4C;
   --beige:   #EDE7DD;
@@ -89,4 +94,26 @@ body {
 }
 .form-input option {
   background: #1A2E4C;
+=======
+  --font-montserrat: 'Montserrat', sans-serif;
+  --color-primary-dark-navy: #0F1C2E;
+  --color-secondary-slate-blue: #1A2E4C;
+  --color-accent-warm-beige: #EDE7DD;
+  --color-accent-teal: #2ED3C6;
+  --color-light-text: #E6E8EB;
+  --background-gradient-dark-start: #0B1626;
+  --background-gradient-dark-end: #16263F;
+}
+
+body {
+  font-family: var(--font-montserrat);
+  color: var(--color-light-text);
+  background-color: var(--color-primary-dark-navy);
+  scroll-behavior: smooth;
+}
+
+/* Add smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+>>>>>>> 9ad67b4b3a2a2ff6772789de0ba0edacd6f4ebdc
 }

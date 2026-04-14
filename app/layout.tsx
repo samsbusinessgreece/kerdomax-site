@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
+import { LanguageProvider } from '@/components/LanguageProvider'
 
 export const metadata: Metadata = {
   title: 'KERDOMAX — AI Revenue Optimization for Greek Short-Term Rental Hosts',
@@ -32,7 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         <Analytics />
       </body>
     </html>
