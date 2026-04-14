@@ -22,15 +22,40 @@ const userIcon = (
 
 const bulletIcons = [shieldIcon, checkIcon, userIcon]
 
+const WEB3FORMS_KEY = '79e9805a-7070-4967-ab1e-7bd06e33b8a9'
+
 export default function BetaForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { t } = useLanguage()
   const b = t.beta
   const f = b.form
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSubmitted(true)
+    setLoading(true)
+    setError(false)
+    const form = e.currentTarget
+    const data = new FormData(form)
+    data.append('access_key', WEB3FORMS_KEY)
+    data.append('subject', 'New Kerdomax Beta Application')
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data,
+      })
+      const json = await res.json()
+      if (json.success) {
+        setSubmitted(true)
+      } else {
+        setError(true)
+      }
+    } catch {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -110,13 +135,13 @@ export default function BetaForm() {
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
                     {f.firstName}
                   </label>
-                  <input className="form-input" type="text" placeholder="Nikos" required />
+                  <input className="form-input" name="first_name" type="text" placeholder="Nikos" required />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
                     {f.lastName}
                   </label>
-                  <input className="form-input" type="text" placeholder="Papadopoulos" required />
+                  <input className="form-input" name="last_name" type="text" placeholder="Papadopoulos" required />
                 </div>
               </div>
 
@@ -124,7 +149,7 @@ export default function BetaForm() {
                 <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
                   {f.email}
                 </label>
-                <input className="form-input" type="email" placeholder="you@example.com" required />
+                <input className="form-input" name="email" type="email" placeholder="you@example.com" required />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
@@ -132,13 +157,13 @@ export default function BetaForm() {
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
                     {f.city}
                   </label>
-                  <input className="form-input" type="text" placeholder={f.cityPlaceholder} />
+                  <input className="form-input" name="city" type="text" placeholder={f.cityPlaceholder} />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.4rem' }}>
                     {f.properties}
                   </label>
-                  <select className="form-input">
+                  <select className="form-input" name="properties">
                     <option value="">{f.selectPlaceholder}</option>
                     {f.propertyOptions.map(opt => (
                       <option key={opt}>{opt}</option>
@@ -153,28 +178,36 @@ export default function BetaForm() {
                 </label>
                 <textarea
                   className="form-input"
+                  name="challenge"
                   rows={3}
                   placeholder={f.challengePlaceholder}
                   style={{ resize: 'vertical' }}
                 />
               </div>
 
+              {error && (
+                <p style={{ fontSize: '0.8rem', color: '#ff6b6b', textAlign: 'center', marginBottom: '0.75rem' }}>
+                  Something went wrong. Please try again.
+                </p>
+              )}
+
               <button
                 type="submit"
+                disabled={loading}
                 style={{
                   width: '100%',
-                  background: 'var(--teal)', color: 'var(--navy)',
+                  background: loading ? 'var(--muted)' : 'var(--teal)', color: 'var(--navy)',
                   fontFamily: 'Montserrat, sans-serif',
                   fontWeight: 800, fontSize: '0.85rem',
                   letterSpacing: '0.08em', textTransform: 'uppercase',
                   padding: '14px', border: 'none', borderRadius: '8px',
-                  cursor: 'pointer', marginTop: '0.5rem',
+                  cursor: loading ? 'not-allowed' : 'pointer', marginTop: '0.5rem',
                   transition: 'background 0.2s, transform 0.15s',
                 }}
-                onMouseEnter={e => { const el = e.currentTarget; el.style.background = 'var(--teal2)'; el.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { const el = e.currentTarget; el.style.background = 'var(--teal)'; el.style.transform = 'none' }}
+                onMouseEnter={e => { if (!loading) { const el = e.currentTarget; el.style.background = 'var(--teal2)'; el.style.transform = 'translateY(-1px)' } }}
+                onMouseLeave={e => { if (!loading) { const el = e.currentTarget; el.style.background = 'var(--teal)'; el.style.transform = 'none' } }}
               >
-                {f.submit}
+                {loading ? 'Sending...' : f.submit}
               </button>
 
               <p style={{ fontSize: '0.72rem', color: 'var(--muted)', textAlign: 'center', marginTop: '0.75rem', lineHeight: 1.5 }}>
