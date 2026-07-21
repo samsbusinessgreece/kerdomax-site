@@ -9,33 +9,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'kerdo-navy': '#0F1C2E',
-        'kerdo-slate': '#1A2E4C',
-        'kerdo-beige': '#EDE7DD',
-        'kerdo-teal': '#2ED3C6',
-        'kerdo-light-text': '#E6E8EB',
-        'gradient-dark-start': '#0B1626',
-        'gradient-dark-end': '#16263F',
+        ink: '#0f2a2c',
+        panel: '#173a3c',
+        cream: '#f4f3f0',
+        stone: '#eae9e5',
+        coral: '#ff6b4a',
+        muted: '#9fb0ae',
       },
       fontFamily: {
-        montserrat: ['Montserrat', 'sans-serif'],
-      },
-      backgroundImage: {
-        'gradient-dark': 'linear-gradient(180deg, #0B1626 0%, #16263F 100%)',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-        slideIn: {
-          '0%': { transform: 'translateY(20px)', opacity: 0 },
-          '100%': { transform: 'translateY(0)', opacity: 1 },
-        },
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-out forwards',
-        'slide-in': 'slideIn 0.5s ease-out forwards',
+        display: ['var(--font-display)', 'sans-serif'],
+        sans: ['var(--font-body)', 'sans-serif'],
+        serif: ['var(--font-serif)', 'serif'],
       },
     },
   },

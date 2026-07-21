@@ -1,27 +1,27 @@
-'use client'
-
 import NavBar from '@/components/NavBar'
 import Hero from '@/components/Hero'
-import Features from '@/components/Features'
-import HowItWorks from '@/components/HowItWorks'
-import Pricing from '@/components/Pricing'
-import Trust from '@/components/Trust'
-import BetaForm from '@/components/BetaForm'
+import TrackRecord from '@/components/TrackRecord'
+import Position from '@/components/Position'
+import Services from '@/components/Services'
+import Figures from '@/components/Figures'
+import About from '@/components/About'
+import Approach from '@/components/Approach'
+import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
-import ScrollReveal from '@/components/ScrollReveal'
 
 export default function Home() {
   return (
-    <main style={{ background: 'var(--navy)', color: 'var(--light)' }}>
+    <main>
       <NavBar />
       <Hero />
-      <Features />
-      <HowItWorks />
-      <Pricing />
-      <Trust />
-      <BetaForm />
+      <TrackRecord />
+      <Position />
+      <Services />
+      <Figures />
+      <About />
+      <Approach />
+      <Contact />
       <Footer />
-      <ScrollReveal />
     </main>
   )
 }

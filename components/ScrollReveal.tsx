@@ -1,26 +1,38 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
-export default function ScrollReveal() {
+export default function ScrollReveal({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [shown, setShown] = useState(false)
+
   useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setShown(true)
+      return
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, i) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.classList.add('visible')
-            }, i * 80)
+            setShown(true)
+            observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     )
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
-
+    observer.observe(el)
     return () => observer.disconnect()
   }, [])
 
-  return null
+  return (
+    <div ref={ref} className={`reveal${shown ? ' in' : ''}`}>
+      {children}
+    </div>
+  )
 }
