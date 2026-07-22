@@ -32,12 +32,13 @@
   @keyframes kx-deal1{0%{transform:translate(90px,100px) rotate(28deg);opacity:0}100%{transform:translate(0,0) rotate(12deg);opacity:1}}
   @keyframes kx-deal2{0%{transform:translate(120px,130px) rotate(32deg);opacity:0}100%{transform:translate(0,0) rotate(-6deg);opacity:1}}
   @keyframes kx-cardmove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .kx-cardband:hover .kx-cardrow{animation-play-state:paused}
-  @media (max-width:760px){.kx-herocards{display:none}}
+  .kx-cardband:hover .kx-cardrow,.kx-cardband.kx-touching .kx-cardrow{animation-play-state:paused}.kx-cardband::-webkit-scrollbar{display:none}
+  @media (max-width:760px){.kx-herocards{opacity:.45}.kx-herocards>div:nth-child(1){top:auto;bottom:14px;right:-10%}.kx-herocards>div:nth-child(1)>div{width:150px}.kx-herocards>div:nth-child(2){top:auto;bottom:50px;right:20%}.kx-herocards>div:nth-child(2)>div{width:118px}}
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}
   }
   image-slot::part(frame){background:transparent}
+  image-slot::part(ring){display:none}
 </style>
 <script src="./image-slot.js"></script>
 </helmet>
@@ -75,7 +76,7 @@
   </div>
 </section>
 
-<section class="kx-cardband" style="background:#f4f3f0;padding:clamp(48px,7vh,84px) 0;overflow:hidden">
+<section class="kx-cardband" style="background:#f4f3f0;padding:clamp(48px,7vh,84px) 0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none">
     <div style="text-align:center;margin:0 0 clamp(26px,4vh,42px);padding:0 24px">
       <span style="font:600 11px/1.4 'IBM Plex Sans';letter-spacing:.2em;text-transform:uppercase;color:rgba(15,42,44,.5)">Over a decade at the table — hover a card</span>
     </div>
@@ -338,6 +339,17 @@ class Component extends DCLogic {
   state = { navOpen: false, revealed: {}, reduceMotion: false, fig: { f1: 0, f2: 0, f3: 0, f4: 0 } };
 
   componentDidMount() {
+    const band = document.querySelector('.kx-cardband');
+    if (band) {
+      let touchTimer;
+      const startTouch = () => { band.classList.add('kx-touching'); clearTimeout(touchTimer); };
+      const endTouch = () => { touchTimer = setTimeout(() => band.classList.remove('kx-touching'), 500); };
+      band.addEventListener('touchstart', startTouch, { passive: true });
+      band.addEventListener('touchend', endTouch, { passive: true });
+      band.addEventListener('touchcancel', endTouch, { passive: true });
+      band.addEventListener('pointerdown', startTouch, { passive: true });
+      band.addEventListener('pointerup', endTouch, { passive: true });
+    }
     const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.setState({ reduceMotion: rm });
     this._io = new IntersectionObserver((entries) => {
