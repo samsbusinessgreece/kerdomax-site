@@ -32,7 +32,7 @@
   @keyframes kx-deal1{0%{transform:translate(90px,100px) rotate(28deg);opacity:0}100%{transform:translate(0,0) rotate(12deg);opacity:1}}
   @keyframes kx-deal2{0%{transform:translate(120px,130px) rotate(32deg);opacity:0}100%{transform:translate(0,0) rotate(-6deg);opacity:1}}
   @keyframes kx-cardmove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .kx-cardband:hover .kx-cardrow,.kx-cardband.kx-touching .kx-cardrow{animation-play-state:paused}.kx-cardband::-webkit-scrollbar{display:none}
+  .kx-cardband:hover .kx-cardrow,.kx-cardband.kx-touching .kx-cardrow{animation-play-state:paused}.kx-cardscroll::-webkit-scrollbar{display:none}
   @media (max-width:760px){.kx-herocards{opacity:.45}.kx-herocards>div:nth-child(1){top:auto;bottom:14px;right:-10%}.kx-herocards>div:nth-child(1)>div{width:150px}.kx-herocards>div:nth-child(2){top:auto;bottom:50px;right:20%}.kx-herocards>div:nth-child(2)>div{width:118px}}
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important}
@@ -76,11 +76,11 @@
   </div>
 </section>
 
-<section class="kx-cardband" style="background:#f4f3f0;padding:clamp(48px,7vh,84px) 0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+<section class="kx-cardband" style="background:#f4f3f0;padding:clamp(48px,7vh,84px) 0;overflow:hidden">
     <div style="text-align:center;margin:0 0 clamp(26px,4vh,42px);padding:0 24px">
       <span style="font:600 11px/1.4 'IBM Plex Sans';letter-spacing:.2em;text-transform:uppercase;color:rgba(15,42,44,.5)">Over a decade at the table — hover a card</span>
     </div>
-    <div class="kx-cardrow" style="display:flex;gap:clamp(14px,1.4vw,22px);width:max-content;padding:0 clamp(14px,1.4vw,22px);animation:kx-cardmove 34s linear infinite">
+    <div class="kx-cardscroll" style="overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%"><div class="kx-cardrow" style="display:flex;gap:clamp(14px,1.4vw,22px);width:max-content;padding:0 clamp(14px,1.4vw,22px);animation:kx-cardmove 34s linear infinite">
       <div style="flex:none;width:clamp(162px,16vw,198px);perspective:1200px">
         <div tabindex="0" style="position:relative;width:100%;aspect-ratio:5/7;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.7,.2,1);cursor:pointer;outline:none;border-radius:24px" style-hover="transform:rotateY(180deg)" style-focus="transform:rotateY(180deg)">
         <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#ffffff;border:1px solid rgba(15,42,44,.08);border-radius:24px;box-shadow:0 8px 24px rgba(15,42,44,.07);padding:26px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
@@ -201,7 +201,7 @@
         </div>
         </div>
       </div>
-    </div>
+    </div></div>
   </section>
 
   <section data-reveal-id="position" style="background:#f4f3f0;padding:clamp(70px,10vh,120px) clamp(20px,4vw,60px);display:flex;flex-wrap:wrap;gap:clamp(30px,5vw,80px);max-width:1300px;margin:0 auto;">
@@ -329,7 +329,10 @@
 
 <footer style="background:#0f2a2c;padding:32px clamp(20px,4vw,60px);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:#8a8880;font:400 13px/1.5 'IBM Plex Sans'">
   <span>Kerdomax IKE · Athens, Greece</span>
-  <a href="https://linkedin.com/in/samdepoortere" style="color:#8a8880">linkedin.com/in/samdepoortere</a>
+  <span style="display:flex;gap:16px;flex-wrap:wrap">
+    <a href="/privacy.html" style="color:#8a8880" style-hover="color:#f4f3f0">Privacy Policy</a>
+    <a href="https://linkedin.com/in/samdepoortere" style="color:#8a8880" style-hover="color:#f4f3f0">linkedin.com/in/samdepoortere</a>
+  </span>
   <span>© 2026</span>
 </footer>
 
